@@ -1,13 +1,13 @@
 {
   "$schema": "https://raw.githubusercontent.com/Azure/azure-devtestlab/master/schemas/2015-01-01/dtlArtifacts.json",
   "title": "Deprovision",
-  "description": "Deprovision Linux Vm to capture as Image.",
+  "description": "Testing Deprovision Linux Vm to capture as Image.",
   "tags": [
     "Linux"
   ],
   "iconUri": "",
   "targetOsType": "Linux",
   "runCommand": {
-    "commandToExecute": "['sudo /usr/sbin/waagent -force -deprovision']"
+    "commandToExecute": "['/usr/sbin/waagent -force -deprovision -runAsSudo']"
   }
 }
