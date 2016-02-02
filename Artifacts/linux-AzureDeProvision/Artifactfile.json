@@ -8,6 +8,6 @@
   "iconUri": "",
   "targetOsType": "Linux",
   "runCommand": {
-    "commandToExecute": "['/usr/sbin/waagent -force -deprovision -runAsSudo']"
+    "commandToExecute": "['sudo /usr/sbin/waagent -force -deprovision']"
   }
 }
