@@ -8,6 +8,6 @@
   "iconUri": "",
   "targetOsType": "Linux",
   "runCommand": {
-    "commandToExecute": "['sudo waagent -deprovision -force']"
+    "commandToExecute": "['sudo /usr/sbin/waagent -deprovision -force exit']"
   }
 }
