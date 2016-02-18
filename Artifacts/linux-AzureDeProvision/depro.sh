@@ -1,6 +1,7 @@
 #!/bin/bash
 
-ssh root@127.0.0.1 'bash -s' < myscript.sh'
+ssh jaymarf@redHat 'bash -s' 
+
 set -e
 sudo waagent -force -deprovision+user
 
