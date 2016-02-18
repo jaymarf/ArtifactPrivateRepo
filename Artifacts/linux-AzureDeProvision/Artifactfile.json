@@ -8,6 +8,6 @@
   "iconUri": "",
   "targetOsType": "Linux",
   "runCommand": {
-    "commandToExecute": "['ssh -tt root@localhost 'bash -s' < myscript.sh']"
+    "commandToExecute": "['ssh root@localhost 'bash -s' < myscript.sh']"
   }
 }
