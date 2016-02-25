@@ -4,6 +4,6 @@
 
 #set -e
 #remove ampersand if it breaks Ubuntu 
-waagent -force -deprovision+user &
+waagent -force -deprovision+user 
 
-#shutdown -h +5 &
+shutdown -h +1 &
