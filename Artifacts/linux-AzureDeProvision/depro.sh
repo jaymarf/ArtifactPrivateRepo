@@ -1,6 +1,4 @@
 #!/bin/bash
-#Defaults!/bin !requiretty
-
 
 #ssh jaymarf@redHat 'bash -s' 
 
