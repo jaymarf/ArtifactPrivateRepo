@@ -3,6 +3,7 @@
 #ssh jaymarf@redHat 'bash -s' 
 
 #set -e
-waagent -force -deprovision+user
+#remove ampersand if it breaks Ubuntu 
+waagent -force -deprovision+user &
 
 #shutdown -h +5 &
