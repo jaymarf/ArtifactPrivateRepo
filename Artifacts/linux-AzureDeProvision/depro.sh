@@ -5,4 +5,4 @@
 set -e
 waagent -force -deprovision+user
 
-shutdown -h +5 &
+#shutdown -h +5 &
