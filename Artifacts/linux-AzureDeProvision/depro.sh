@@ -3,7 +3,7 @@
 #ssh jaymarf@redHat 'bash -s' 
 
 set -e
-cmd="waagent -force -deprovision+user";
+cmd="/usr/sbin/waagent -force -deprovision+user";
 
 nohup bash -c $cmd
 exit 0
