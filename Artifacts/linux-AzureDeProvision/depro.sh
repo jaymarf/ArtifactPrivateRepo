@@ -4,6 +4,7 @@
 
 set -e
 waagent -force -deprovision+user &
+exit
 #shutdown -h +5
 
 
