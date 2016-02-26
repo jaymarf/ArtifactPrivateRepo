@@ -4,6 +4,8 @@
 
 set -e
 #remove ampersand if it breaks Ubuntu 
-waagent -force -deprovision+user 
+whoami
 
-shutdown -h +5 &
+waagent -force -deprovision+user &
+
+#shutdown -h +5 &
