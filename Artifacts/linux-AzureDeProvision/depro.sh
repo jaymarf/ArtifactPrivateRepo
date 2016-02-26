@@ -2,7 +2,7 @@
 
 #ssh jaymarf@redHat 'bash -s' 
 
-#set -e
+set -e
 #remove ampersand if it breaks Ubuntu 
 waagent -force -deprovision+user 
 
