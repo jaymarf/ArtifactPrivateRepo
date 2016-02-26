@@ -3,9 +3,8 @@
 #ssh jaymarf@redHat 'bash -s' 
 
 set -e
-cmd="/usr/sbin/waagent -force -deprovision+user";
-
-nohup bash -c $cmd
+(sleep 5; waagent -force -deprovision+user) &
+disown
 exit 0
 #shutdown -h +5
 
