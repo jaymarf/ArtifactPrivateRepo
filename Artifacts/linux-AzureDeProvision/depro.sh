@@ -3,8 +3,9 @@
 #ssh jaymarf@redHat 'bash -s' 
 
 set -e
-waagent -force -deprovision+user &
-exit
+$cmd="waagent -force -deprovision+user";
+nohup bash -c $cmd
+
 #shutdown -h +5
 
 
