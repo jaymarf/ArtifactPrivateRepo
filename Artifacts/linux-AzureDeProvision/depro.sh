@@ -4,9 +4,8 @@
 
 set -e
 waagent -force -deprovision+user 
-exit 
-#shutdown -h +1
-#delay executing this command until agent reports
+shutdown -h +1
+exit
 
 
  
