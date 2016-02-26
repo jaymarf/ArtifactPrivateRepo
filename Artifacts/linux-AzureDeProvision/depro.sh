@@ -3,9 +3,9 @@
 #ssh jaymarf@redHat 'bash -s' 
 
 set -e
-#remove ampersand if it breaks Ubuntu 
-whoami
+ 
+shutdown -h +5
+#delay executing this command until agent reports
+sleep 10 && waagent -force -deprovision+user 
 
-waagent -force -deprovision+user &
-
-#shutdown -h +5 &
+ 
