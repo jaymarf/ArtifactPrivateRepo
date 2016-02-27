@@ -1,7 +1,5 @@
 #!/bin/bash
-
-set -e
-waagent -force -deprovision+user 
+/usr/sbin/waagent -force -deprovision+user 
 
 
 
