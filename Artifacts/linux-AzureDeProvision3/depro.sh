@@ -1,4 +1,4 @@
 
 set -e
- nohup sh -c 'sleep 15 && /usr/sbin/waagent -force -deprovision+user' > /dev/null &
-exit 0
+ nohup sh -c '/usr/sbin/waagent -force -deprovision+user' > /dev/null &
+sleep 15; exit 0
