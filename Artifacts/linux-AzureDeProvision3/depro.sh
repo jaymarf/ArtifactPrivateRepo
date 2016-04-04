@@ -1,4 +1,4 @@
 
 set -e
-sh -c '/usr/sbin/waagent -force -deprovision+user' > /dev/null 
+/usr/sbin/waagent -force -deprovision+user 
 exit 0
