@@ -49,7 +49,7 @@ Enable-PSRemoting –Force -SkipNetworkProfileCheck
 # Ensure that current process can run scripts. 
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force 
 
-Invoke-Command -FilePath $command -Credential $credential -ComputerName $env:COMPUTERNAME -ArgumentList $packageList
+Invoke-Command -ComputerName $env:COMPUTERNAME -FilePath $command -Credential $credential -ArgumentList $packageList
 
 # Delete the artifactInstaller user
 $cn.Delete("User", $userName)
