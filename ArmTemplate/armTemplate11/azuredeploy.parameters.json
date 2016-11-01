@@ -1,0 +1,21 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "storageAccountNamePrefix": {
+      "value": "GEN-UNIQUE"
+    },
+    "vmDnsPrefix": {
+      "value": "GEN-UNIQUE-13"
+    },
+    "adminUsername": {
+      "value": "vinagesh"
+    },
+    "adminPassword": {
+      "value": "Qaz28s8s"
+    },
+    "vmSize": {
+      "value": "Standard_A1"
+    }
+  }
+}
