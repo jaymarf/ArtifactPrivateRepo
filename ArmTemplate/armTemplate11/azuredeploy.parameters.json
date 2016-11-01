@@ -3,13 +3,13 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "storageAccountNamePrefix": {
-      "value": "vinagesh"
+      "value": "GEN-UNIQUE"
     },
     "vmDnsPrefix": {
-      "value": "vinagesh"
+      "value": "GEN-UNIQUE-13"
     },
     "adminUsername": {
-      "value": "vinagesh"
+      "value": "GEN-UNIQUE"
     },
     "adminPassword": {
       "value": "Qaz28s8s"
