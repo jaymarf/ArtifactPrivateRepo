@@ -1,7 +1,0 @@
-{
-  "itemDisplayName": "TesTempt2",
-  "description": "This template deploys a Go Ethereum client along with a genesis block on Ubuntu virtual machines",
-  "summary": "This template deploys a Go Ethereum client on Ubuntu",
-  "githubUsername": "vinagesh",
-  "dateUpdated": "2015-11-05"
-}
