@@ -14,10 +14,28 @@
         "description": "Password for the Virtual Machine."
       }
     },
+    "existingVirtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing VNET"
+      }
+    },
+      "existingVirtualNetworkResourceGroup": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing VNET resource group"
+      }
+    },
     "dnsLabelPrefix": {
       "type": "string",
       "metadata": {
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
+      }
+    },
+      "subnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the subnet in the virtual network you want to use"
       }
     },
     "windowsOSVersion": {
@@ -40,11 +58,10 @@
     "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'sawinvm')]",
     "nicName": "myVMNic",
     "addressPrefix": "10.2.0.0/16",
-    "subnetName": "Subnet",
-    "subnetPrefix": "10.2.1.0/24",
+    "subnetRef": "[concat(variables('vnetID'),'/subnets/', parameters('subnetName'))]",
+    "vnetID": "[resourceId(parameters('existingVirtualNetworkResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('existingVirtualNetworkName'))]",
     "publicIPAddressName": "myPublicIP",
-    "vmName": "SimpleWindowsVM",
-    "virtualNetworkName": "JFLabOwner"
+    "vmName": "SimpleWindowsVM"
   },
   "resources": [
     {
@@ -76,8 +93,7 @@
       "name": "[variables('nicName')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
-        "/subscriptions/e605a3bc-ee4e-4c7a-9709-1868a28b1d4d/resourceGroups/_JaymarTestResources/providers/Microsoft.Network/virtualNetworks/JFLabOwner"
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -89,7 +105,7 @@
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
               },
               "subnet": {
-                "id": "/subscriptions/e605a3bc-ee4e-4c7a-9709-1868a28b1d4d/resourceGroups/_JaymarTestResources/providers/Microsoft.Network/virtualNetworks/JFLabOwner/BaseBase"
+               "id": "[variables('subnetRef')]"
               }
             }
           }
