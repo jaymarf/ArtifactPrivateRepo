@@ -1,5 +1,5 @@
 {
-  "itemDisplayName": "jaymar - basictemplate",
+  "itemDisplayName": "jaymar - BaseT",
   "description": "This template deploys a Go Ethereum client along with a genesis block on Ubuntu virtual machines",
   "summary": "This template deploys a Go Ethereum client on Ubuntu",
   "githubUsername": "jaymar",
