@@ -2,6 +2,10 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "virtualNetworks_JFLabOwner_name": {
+     "defaultValue": "JFLabOwner",
+     "type": "String"
+    },
     "storageAccountNamePrefix": {
       "type": "string",
       "maxLength": 11,
@@ -53,16 +57,16 @@
     "imageVersion": "latest",
     "imageSKU": "14.04.2-LTS",
     "imageOffer": "UbuntuServer",
-    "subnetName": "Subnet-1",
-    "subnetPrefix": "10.0.0.0/24",
+    "subnetName": "BaseBase",
+    "subnetPrefix": "10.2.1.0/24",
     "storageAccountType": "Standard_LRS",
     "publicIPAddressName": "publicIP",
     "publicIPAddressType": "Dynamic",
     "vmStorageAccountContainerName": "vhds",
     "vmName": "[parameters('vmDnsPrefix')]",
-    "virtualNetworkName": "WPVNET",
+    "virtualNetworkName": "[parameters('virtualNetworks_JFLabOwner_name')]",
     "apiVersion": "2015-06-15",
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "vnetID": "/subscriptions/e605a3bc-ee4e-4c7a-9709-1868a28b1d4d/resourceGroups/_JaymarTestResources/providers/Microsoft.Network/virtualNetworks/JFLabOwner",
     "subnetRef": "[concat(variables('vnetID'),'/subnets/',variables('subnetName'))]",
     "storageAccountName": "[replace(replace(tolower(concat(parameters('storageAccountNamePrefix'), uniquestring(resourceGroup().id))), '-',''),'.','')]"
   },
