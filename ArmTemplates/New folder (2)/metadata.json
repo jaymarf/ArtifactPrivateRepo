@@ -1,7 +1,7 @@
 {
-  "itemDisplayName": "vinagesh - Go Ethereum on Ubuntu",
+  "itemDisplayName": "jaymar - basictemplate",
   "description": "This template deploys a Go Ethereum client along with a genesis block on Ubuntu virtual machines",
   "summary": "This template deploys a Go Ethereum client on Ubuntu",
-  "githubUsername": "vinagesh",
+  "githubUsername": "jaymar",
   "dateUpdated": "2015-11-05"
 }
