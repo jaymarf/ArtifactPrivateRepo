@@ -1,3 +1,6 @@
+{
+"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+"contentVersion": "1.0.0.0",
 "resources": [ 
 	{ 
       "apiVersion": "2015-01-01", 
@@ -10,9 +13,9 @@
 			  "contentVersion": "1.0.0.0"
 			}, 
 			"parameters": { 
-			  "adminUsername": {"value": "[parameters('adminUsername')]"},
-			  "adminPassword": {"value": "[parameters('adminPassword')]"},
-			  "dnsLabelPrefix": {"value": "[parameters('dnsLabelPrefix')]"},
+			  "adminUsername": {"value": "jaymarf"},
+			  "adminPassword": {"value": "7yhn8ujm&YHN*UJM"},
+			  "dnsLabelPrefix": {"value": "jrft"},
 			  "ubuntuOSVersion": {"value": "12.04.5-LTS"}
 						  
 			}
@@ -20,3 +23,4 @@
 		
 	}  
 ] 
+}
