@@ -18,7 +18,7 @@
     },
     "existingVirtualNetworkName": {
       "type": "string",
-      "defaultValue": "jaymarExtNet",
+      "defaultValue": "DtlMD-Demo-Lab",
       "metadata": {
         "description": "Name of the existing VNET"
       }
@@ -34,7 +34,7 @@
       "type": "string",
       "defaultValue": "JaymarExt",
       "allowedValues": [
-        "JaymarExt",
+        "DtlMD-Demo-LabSubnet",
         "cit"
       ],
       "metadata": {
