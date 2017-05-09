@@ -11,28 +11,28 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_A2m_v2",
+      "defaultValue": "Standard_DS1_v2",
       "metadata": {
         "description": "Size of the VM"
       }
     },
     "existingVirtualNetworkName": {
       "type": "string",
-      "defaultValue": "ReassureDev",
+      "defaultValue": "jaymarExtNet",
       "metadata": {
         "description": "Name of the existing VNET"
       }
     },
     "existingVirtualNetworkResourceGroup": {
       "type": "string",
-      "defaultValue": "DevNetworks",
+      "defaultValue": "_JaymarTestResources",
       "metadata": {
         "description": "Name of the existing VNET resource group"
       }
     },
     "subnetName": {
       "type": "string",
-      "defaultValue": "development",
+      "defaultValue": "JaymarExt",
       "allowedValues": [
         "development",
         "cit"
