@@ -34,7 +34,7 @@
       "type": "string",
       "defaultValue": "JaymarExt",
       "allowedValues": [
-        "development",
+        "JaymarExt",
         "cit"
       ],
       "metadata": {
