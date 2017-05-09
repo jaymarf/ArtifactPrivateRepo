@@ -47,9 +47,6 @@
     },
     "adminPassword": {
       "type": "securestring"
-    },
-    "gitApiKey": {
-      "type": "securestring"
     }
   },
   "variables": {
@@ -131,24 +128,6 @@
               "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
             }
           ]
-        }
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('vmName'),'/', 'CustomScript')]",
-      "apiVersion": "2015-06-15",
-      "location": "[resourceGroup().location]",
-      "dependsOn": [
-        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-      ],
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "protectedSettings": {
-          "commandToExecute": "[concat('wget http://172.40.16.6/sw/linux-initialise.sh && sh linux-initialise.sh ', parameters('gitApiKey'))]"
         }
       }
     }
