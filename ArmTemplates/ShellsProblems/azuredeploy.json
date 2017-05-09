@@ -25,7 +25,7 @@
     },
     "existingVirtualNetworkResourceGroup": {
       "type": "string",
-      "defaultValue": "_JaymarTestResources",
+      "defaultValue": "MD-Demo-LabRG800040",
       "metadata": {
         "description": "Name of the existing VNET resource group"
       }
