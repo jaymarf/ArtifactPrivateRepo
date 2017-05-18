@@ -19,7 +19,7 @@
     },
     "dnsNameForPublicIP": {
       "type": "string",
-      "defaultValue": "jaymarRF",
+      "defaultValue": "jaymarrft",
       "minLength": 1,
       "metadata": {
         "description": "Globally unique DNS Name for the Public IP used to access the Virtual Machine."
