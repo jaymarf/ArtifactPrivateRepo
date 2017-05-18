@@ -4,7 +4,7 @@
   "parameters": {
     "adminUsername": {
       "type": "string",
-      "defaultValue": "roger",
+      "defaultValue": "jaymarf",
       "minLength": 1,
       "metadata": {
         "description": "Username for the Virtual Machine."
@@ -12,14 +12,14 @@
     },
     "adminPassword": {
       "type": "securestring",
-      "defaultValue": "ode#1ode",
+      "defaultValue": "1qaz2wsx!QAZ@WSX",
       "metadata": {
         "description": "Password for the Virtual Machine."
       }
     },
     "dnsNameForPublicIP": {
       "type": "string",
-      "defaultValue": "rbestzzdns",
+      "defaultValue": "jaymarfzx",
       "minLength": 1,
       "metadata": {
         "description": "Globally unique DNS Name for the Public IP used to access the Virtual Machine."
@@ -39,7 +39,7 @@
     },
     "baseName": {
       "type": "string",
-      "defaultValue": "rbestzz"
+      "defaultValue": "jaymarftfg"
     }
   },
   "variables": {
