@@ -1,52 +1,343 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-      "_artifactsLocation": {
-          "type": "string"
-      },
-      "_artifactsLocationSasToken": {
-          "type": "securestring"
-      }},
-  "variables": {
-      "TestEnvironTemplateFileName": "TestEnviron.json",
-      "TestEnvironTemplateParametersFileName": "TestEnviron.parameters.json",
-      "TestEnvironTemplateFileName2": "TestEnviron2.json",
-      "TestEnvironTemplateParametersFileName2": "TestEnviron2.parameters.json"},
-  "resources": [
-      {
-          "name": "TestEnviron",
-          "type": "Microsoft.Resources/deployments",
-          "apiVersion": "2016-09-01",
-          "dependsOn": [ ],
-          "properties": {
-              "mode": "Incremental",
-              "templateLink": {
-                  "uri": "[concat(parameters('_artifactsLocation'), '/', variables('TestEnvironTemplateFileName'), parameters('_artifactsLocationSasToken'))]",
-                  "contentVersion": "1.0.0.0"
-              },
-              "parametersLink": {
-                  "uri": "[concat(parameters('_artifactsLocation'), '/', variables('TestEnvironTemplateParametersFileName'), parameters('_artifactsLocationSasToken'))]",
-                  "contentVersion": "1.0.0.0"
-              }
-          }
-      },
-	  {
-          "name": "TestEnviron2",
-          "type": "Microsoft.Resources/deployments",
-          "apiVersion": "2016-09-01",
-          "dependsOn": [ ],
-          "properties": {
-              "mode": "Incremental",
-              "templateLink": {
-                  "uri": "[concat(parameters('_artifactsLocation'), '/', variables('TestEnvironTemplateFileName2'), parameters('_artifactsLocationSasToken'))]",
-                  "contentVersion": "1.0.0.0"
-              },
-              "parametersLink": {
-                  "uri": "[concat(parameters('_artifactsLocation'), '/', variables('TestEnvironTemplateParametersFileName2'), parameters('_artifactsLocationSasToken'))]",
-                  "contentVersion": "1.0.0.0"
-              }
-          }
-      }],
-  "outputs": {}
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "envPrefix": {
+            "type": "string",
+            "defaultValue": "customerdt",
+            "metadata": {
+                "description": "Common prefix for all resource naming"
+            }
+        },
+        "envConfig": {
+            "type": "string",
+            "defaultValue": "DCServerWebServer2012R2",
+            "metadata": {
+                "description": "The name of the environment (name of folder)"
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "demoadmin",
+            "metadata": {
+                "description": "Admin username for environment"
+            }
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Admin password for environment"
+            }
+        },
+        "_artifactsLocation": {
+            "type": "string",
+            "defaultValue": "https://random-invalid.blob.core.windows.net/arm",
+            "metadata": {
+                "description": "Storage Account/GitHub base uri for required files"
+            }
+        },
+        "_artifactsLocationSasToken": {
+            "type": "securestring",
+            "metadata": {
+                "description": "SAS token if using private Azure Storage"
+            }
+        },
+        "VirtualNetwork": {
+            "type":"string",
+            "metadata": {
+                "description": "Name of the Virtual Network to join machines to."
+            }
+        },
+        "VirtualNetworkResourceGroup": {
+            "type": "string",
+            "defaultValue": "RANDOM-RG-DT-DevTestVirtualNetworks",
+            "metadata": {
+                "description": "Resource group containing the named Virtual Network"
+            }
+        },
+        "SystemTag" : {
+            "type":"string",
+            "metadata": {
+                "description": "System to tag the resources with, e.g. Core Systems, VIP etc"
+            }
+        },
+        "CostCentreTag" : {
+            "type" :"string",
+            "metadata": {
+                "description" : "Cost centre resources are associated with"
+            }
+        },
+        "DepartmentTag": {
+            "type" :"string",
+            "metadata": {
+                "description" : "Department resources belong to"
+            }
+        },
+        "EnvironmentTag" : {
+            "type": "string",
+            "allowedValues": [
+                "Dev","Test","PPTE","Prod","UAT"
+            ],
+            "metadata": {
+                "description": "Environment resource is being used in, e.g. Dev, Test, PPTE, Prod"
+            }
+        }
+    },
+    "variables": {
+        "ApiVersion": {
+            "Storage": "2016-01-01",
+            "Network": "2016-12-01",
+            "VirtualMachine": "2017-03-30",
+            "Default": "2017-03-01"
+        },
+        "VirtualNetworkID": "[resourceId(parameters('VirtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks', parameters('VirtualNetwork'))]",
+        "StdVmImageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "2012-R2-Datacenter",
+            "version": "latest"
+        },
+        "vmConfiguration": {
+            "dc": {
+                "name": "DC",
+                "size": "Standard_A2"
+            },
+            "web": {
+                "name": "WEB",
+                "size": "Standard_A2"
+            }
+        }
+    },
+    "resources": [
+        {
+            "name": "DCServer",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('ApiVersion').Default]",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/VMs/DCServer/DCServer.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ApiVersion": {
+                        "value": "[variables('ApiVersion')]"
+                    },
+                    "VirtualNetworkId": {
+                        "value": "[variables('VirtualNetworkID')]"
+                    },
+                    "AdminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "envPrefix": {
+                        "value": "[parameters('envPrefix')]"
+                    },
+                    "vmImageReference": {
+                        "value": "[variables('StdVmImageReference')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[parameters('_artifactsLocationSasToken')]"
+                    },
+                    "vmName": {
+                        "value": "[variables('vmConfiguration').dc.name]"
+                    },
+                    "vmSize": {
+                        "value": "[variables('vmConfiguration').dc.size]"
+                    },
+                    "SystemTag" : {
+                        "value" : "[parameters('SystemTag')]"
+                    },
+                    "CostCentreTag" : {
+                        "value" : "[parameters('CostCentreTag')]"
+                    },
+                    "DepartmentTag": {
+                        "value" : "[parameters('DepartmentTag')]"
+                    },
+                    "EnvironmentTag" : {
+                        "value" : "[parameters('EnvironmentTag')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "UpdateVNetDNS",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[parameters('VirtualNetworkResourceGroup')]",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/DCServerDSC"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/SharedTemplates/UpdateVNetDNS.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ApiVersion": {
+                        "value": "[variables('ApiVersion')]"
+                    },
+                    "VirtualNetwork": {
+                        "value": "[parameters('VirtualNetwork')]"
+                    },
+                    "DNSaddress": {
+                        "value": "[reference('DCServer').outputs.ipAddress.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "DCServerDSC",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('ApiVersion').Default]",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/DCServer"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/VMs/DCServer/DCServerDSC.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ApiVersion": {
+                        "value": "[variables('ApiVersion')]"
+                    },
+                    "AdminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "envPrefix": {
+                        "value": "[parameters('envPrefix')]"
+                    },
+                    "envConfig": {
+                        "value": "[parameters('envConfig')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[parameters('_artifactsLocationSasToken')]"
+                    },
+                    "vmName": {
+                        "value": "[variables('vmConfiguration').dc.name]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "WebServer",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('ApiVersion').Default]",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/VMs/WebServer/WebServer.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ApiVersion": {
+                        "value": "[variables('ApiVersion')]"
+                    },
+                    "VirtualNetworkId": {
+                        "value": "[variables('VirtualNetworkID')]"
+                    },
+                    "AdminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "envPrefix": {
+                        "value": "[parameters('envPrefix')]"
+                    },
+                    "vmImageReference": {
+                        "value": "[variables('StdVmImageReference')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[parameters('_artifactsLocationSasToken')]"
+                    },
+                    "vmName": {
+                        "value": "[variables('vmConfiguration').web.name]"
+                    },
+                    "vmSize": {
+                        "value": "[variables('vmConfiguration').web.size]"
+                    },
+                    "SystemTag" : {
+                        "value" : "[parameters('SystemTag')]"
+                    },
+                    "CostCentreTag" : {
+                        "value" : "[parameters('CostCentreTag')]"
+                    },
+                    "DepartmentTag": {
+                        "value" : "[parameters('DepartmentTag')]"
+                    },
+                    "EnvironmentTag" : {
+                        "value" : "[parameters('EnvironmentTag')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "WebServerDSC",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "[variables('ApiVersion').Default]",
+            "dependsOn": [
+                "Microsoft.Resources/deployments/WebServer",
+                "Microsoft.Resources/deployments/DCServerDSC",
+                "Microsoft.Resources/deployments/UpdateVNetDNS"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('_artifactsLocation'), '/VMs/WebServer/WebServerDSC.json', parameters('_artifactsLocationSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "ApiVersion": {
+                        "value": "[variables('ApiVersion')]"
+                    },
+                    "AdminUsername": {
+                        "value": "[parameters('adminUsername')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminPassword')]"
+                    },
+                    "envPrefix": {
+                        "value": "[parameters('envPrefix')]"
+                    },
+                    "envConfig": {
+                        "value": "[parameters('envConfig')]"
+                    },
+                    "_artifactsLocation": {
+                        "value": "[parameters('_artifactsLocation')]"
+                    },
+                    "_artifactsLocationSasToken": {
+                        "value": "[parameters('_artifactsLocationSasToken')]"
+                    },
+                    "vmName": {
+                        "value": "[variables('vmConfiguration').web.name]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+
+    }
 }
